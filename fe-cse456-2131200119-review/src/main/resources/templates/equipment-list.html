@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Equipment List</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1>This is equipment list page</h1>
+
+<div>
+    <div class="welcome">
+        <span class="username" th:if="${session.user.userName!=null}" th:text="${session.user.userName}"></span>
+        <span><a th:href="@{/logout}">Logout</a></span>
+    </div>
+</div>
+<h1>Equipment List</h1>
+<a th:href="@{/equipments/new}">Add New Equipment</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>equipmentId</th>
+        <th>equipmentName</th>
+        <th>purchasePrice</th>
+        <th>quantityAvailable</th>
+        <th>purchaseDate</th>
+        <th>typeName</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+<!--    search-->
+
+    <tr th:each="s : ${equipments}">
+        <td th:text="${s.equipmentId}"></td>
+        <td th:text="${s.equipmentName}"></td>
+        <td th:text="${s.purchasePrice}"></td>
+        <td th:text="${s.quantityAvailable}"></td>
+        <td th:text="${#temporals.format(s.purchaseDate, 'dd-MM-yyyy HH:mm:ss')}"></td>
+        <td th:text="${s.equipmentType.typeName}"></td>
+        <td>
+            <a th:href="@{'/equipments/edit/'+${s.equipmentId}}" th:if="${session.user.role==1}">Edit</a>
+            <a th:if="${session.user.role==1}" th:href="@{'/equipments/delete/'+${s.equipmentId}}" onclick="return confirm('Are you sure to delete this equipment ?')">| Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

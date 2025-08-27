@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Equipment Form</title>
+</head>
+<body>
+<h2 th:if="${formMode == 'create'}">Create Equipment Form</h2>
+<h2 th:if="${formMode == 'edit'}">Edit Equipment Form</h2>
+<form th:action="@{/equipments/form}" method="post" th:object="${equipment}">
+    <span th:if="${duplicate}" th:text="${duplicate}"></span>
+    <p>
+        <label for="equipmentId">Equipment ID</label>
+        <input type="text" th:field="*{equipmentId}" id="equipmentId">
+        <span th:errors="*{equipmentId}" style="color: red"></span>
+    </p>
+    <p>
+        <label for="equipmentName">Equipment ID</label>
+        <input type="text" th:field="*{equipmentName}" id="equipmentName">
+        <span th:errors="*{equipmentName}" style="color: red"></span>
+    </p>
+    <p>
+        <label for="purchasePrice">Equipment ID</label>
+        <input type="text" th:field="*{purchasePrice}" id="purchasePrice">
+        <span th:errors="*{purchasePrice}" style="color: red"></span>
+    </p>
+    <p>
+        <label for="quantityAvailable">Equipment ID</label>
+        <input type="text" th:field="*{quantityAvailable}" id="quantityAvailable">
+        <span th:errors="*{quantityAvailable}" style="color: red"></span>
+    </p>
+    <p hidden="hidden">
+        <input type="text" th:field="*{purchaseDate}" id="purchaseDate" hidden="hidden">
+    </p>
+    <p>
+        <label for="equipmentTypeId">Equipment Type</label>
+        <select id="equipmentTypeId" name="equipmentTypeId">
+            <option th:each="e : ${equipmentTypes}"
+                    th:value="${e.equipmentTypeId}"
+                    th:text="${e.typeName}">
+            </option>
+        </select>
+
+        <span th:errors="*{quantityAvailable}" style="color: red"></span>
+    </p>
+
+    <button type="submit">Submit</button>
+    <input type="text" name="formMode" th:value="${formMode}" hidden="hidden">
+</form>
+
+
+</body>
+</html>
